@@ -1,31 +1,48 @@
 package entity;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.util.Date;
 
+@Entity
 public class Tarjeta {
-    // Atrib
-    private int ID; // pk
-    private String numeroTarjeta;
-    private Date fechaVencimiento;
-    private String estado; // Act, Bloq, Per
-    private int ID_Cuenta; // fk Cuenta
 
-    // Const
-    public Tarjeta(int ID, String numeroTarjeta, Date fechaVencimiento, String estado, int ID_Cuenta) {
-        this.ID = ID;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String numeroTarjeta;
+
+    private Date fechaVencimiento;
+
+    private String estado;
+
+    @ManyToOne
+    @JoinColumn(name = "id_cuenta")
+    private Cuenta cuenta;
+
+  
+    public Tarjeta() {
+    }
+
+    public Tarjeta(String numeroTarjeta, Date fechaVencimiento, String estado, Cuenta cuenta) {
         this.numeroTarjeta = numeroTarjeta;
         this.fechaVencimiento = fechaVencimiento;
         this.estado = estado;
-        this.ID_Cuenta = ID_Cuenta;
+        this.cuenta = cuenta;
     }
 
-    // Get/set
-    public int getID() {
-        return ID;
+
+    public Long getId() {
+        return id;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getNumeroTarjeta() {
@@ -52,11 +69,11 @@ public class Tarjeta {
         this.estado = estado;
     }
 
-    public int getID_Cuenta() {
-        return ID_Cuenta;
+    public Cuenta getCuenta() {
+        return cuenta;
     }
 
-    public void setID_Cuenta(int ID_Cuenta) {
-        this.ID_Cuenta = ID_Cuenta;
+    public void setCuenta(Cuenta cuenta) {
+        this.cuenta = cuenta;
     }
 }
