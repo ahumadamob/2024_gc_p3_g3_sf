@@ -13,19 +13,14 @@ public class Cliente {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long Id;
 	
-	@Column(name = "nombre", nullable = false, length = 25)
     private String nombre;
 	
-	@Column(name = "apellido", nullable = false, length = 25)
     private String apellido;
 	
-	@Column(name = "direccion", nullable = false, length = 50)
     private String direccion;
 	
-	@Column(name = "telefono", nullable = false, length = 15)
     private String telefono;
 	
-	@Column(name = "email", nullable = false, length = 50)
     private String email;
     
 	public Long getId() {
