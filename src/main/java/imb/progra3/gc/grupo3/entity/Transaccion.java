@@ -1,4 +1,4 @@
-package entity;
+package imb.progra3.gc.grupo3.entity;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
