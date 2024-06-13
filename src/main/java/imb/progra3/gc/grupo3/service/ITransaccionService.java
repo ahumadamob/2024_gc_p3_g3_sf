@@ -1,4 +1,4 @@
-package service;
+package imb.progra3.gc.grupo3.service;
 
 import java.util.List;
 

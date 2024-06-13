@@ -1,11 +1,11 @@
-package service.jpa;
+package imb.progra3.gc.grupo3.service.jpa;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import imb.progra3.gc.grupo3.entity.Transaccion;
-import repository.TransaccionRepository;
-import service.ITransaccionService;
+import imb.progra3.gc.grupo3.repository.TransaccionRepository;
+import imb.progra3.gc.grupo3.service.ITransaccionService;
 
 @Service
 public class TransaccionServiceImpl implements ITransaccionService {
