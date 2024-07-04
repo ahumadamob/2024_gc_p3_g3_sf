@@ -1,8 +1,8 @@
-package repository;
+package grupo3.demo.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import entity.Ubicacion;
+import grupo3.demo.entity.Ubicacion;
 
 public interface UbicacionRepository extends JpaRepository<Ubicacion, Long>{
 
