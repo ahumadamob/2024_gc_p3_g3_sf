@@ -1,8 +1,8 @@
-package service;
+package grupo3.demo.service;
 
 import java.util.List;
 
-import entity.Ubicacion;
+import grupo3.demo.entity.Ubicacion;
 
 public interface IUbicacionService {
 	List<Ubicacion> getAll();

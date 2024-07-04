@@ -1,19 +1,18 @@
-package service.impl;
+package grupo3.demo.service.impl;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import entity.Ubicacion;
-import repository.UbicacionRepository;
-import service.IUbicacionService;
+import grupo3.demo.entity.Ubicacion;
+import grupo3.demo.repository.UbicacionRepository;
+import grupo3.demo.service.IUbicacionService;
 
 @Service
 public class UbicacionServiceImpl implements IUbicacionService{
-	private final UbicacionRepository ubicacionRepository;
-	public UbicacionServiceImpl(UbicacionRepository ubicacionRepository) {
-		this.ubicacionRepository = ubicacionRepository;
-	}
+	@Autowired
+	private UbicacionRepository ubicacionRepository;
 	
 	 @Override
 	    public List<Ubicacion> getAll() {
