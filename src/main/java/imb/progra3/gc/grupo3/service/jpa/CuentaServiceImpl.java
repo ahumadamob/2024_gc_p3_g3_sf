@@ -44,4 +44,10 @@ public class CuentaServiceImpl implements ICuentaService {
     public boolean exists(Long id) {
         return cuentaRepository.existsById(id);
     }
+
+	@Override
+	public Cuenta getById(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

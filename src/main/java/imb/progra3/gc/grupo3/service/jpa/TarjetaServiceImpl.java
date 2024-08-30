@@ -1,9 +1,10 @@
-package service;
+package imb.progra3.gc.grupo3.service.jpa;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import entity.Tarjeta;
-import tarjetarepository.TarjetaRepository;
+import imb.progra3.gc.grupo3.entity.Tarjeta;
+import imb.progra3.gc.grupo3.repository.TarjetaRepository;
+import imb.progra3.gc.grupo3.service.ITarjetaService;
 
 @Service
 public class TarjetaServiceImpl implements ITarjetaService {

@@ -1,7 +1,8 @@
-package service;
+package imb.progra3.gc.grupo3.service;
 
 import java.util.List;
-import entity.Tarjeta;
+import imb.progra3.gc.grupo3.entity.Tarjeta;
+
 
 public interface ITarjetaService {
 
