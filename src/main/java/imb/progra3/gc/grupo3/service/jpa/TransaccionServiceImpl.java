@@ -37,4 +37,16 @@ public class TransaccionServiceImpl implements ITransaccionService {
 	public void delete(Long id) {
 		repo.deleteById(id);
 	}
+
+	@Override
+	public List<Transaccion> getAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Transaccion getById(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

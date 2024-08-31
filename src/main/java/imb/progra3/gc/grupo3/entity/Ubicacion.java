@@ -1,4 +1,4 @@
-package entity;
+package imb.progra3.gc.grupo3.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

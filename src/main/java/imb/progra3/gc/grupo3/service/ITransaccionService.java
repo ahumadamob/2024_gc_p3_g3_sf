@@ -10,5 +10,8 @@ public interface ITransaccionService {
 	public boolean exists(Long id);
 	public Transaccion save(Transaccion transaccion);
 	public void delete(Long id);
+	public List<Transaccion> getAll();
+	public Transaccion getById(Long id);
+	
 
 }

@@ -1,10 +1,6 @@
 package imb.progra3.gc.grupo3.controller;
-
 import imb.progra3.gc.grupo3.entity.Cuenta;
 import imb.progra3.gc.grupo3.service.ICuentaService;
-import imb.progra3.gc.grupo3.util.APIResponse;
-import imb.progra3.gc.grupo3.util.ResponseUtil;
-import jakarta.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,50 +14,49 @@ public class CuentaController {
     private ICuentaService cuentaService;
 
     @GetMapping
-    public ResponseEntity<APIResponse<List<Cuenta>>> getAllCuentas() {
-        List<Cuenta> cuentas = cuentaService.findAll();
-        return cuentas.isEmpty() ? ResponseUtil.notFound("No se encontraron cuentas") :
-                ResponseUtil.success(cuentas);
+    public List<Cuenta> getAllTarjetas() {
+        return cuentaService.getAll();
     }
-
-
 
     @GetMapping("{id}")
-    public ResponseEntity<APIResponse<Cuenta>> getCuentaById(@PathVariable("id") Long id){
-        return cuentaService.exists(id) ? ResponseUtil.success(cuentaService.findById(id)) :
-                ResponseUtil.notFound("No se encontró cuenta con id {0}", id);
-    }
-
-    @PostMapping
-    public ResponseEntity<APIResponse<Cuenta>> createCuenta(@RequestBody Cuenta cuenta){
-        return cuentaService.exists(cuenta.getId()) ?
-                ResponseUtil.badRequest("Ya existe una cuenta con id {0}", cuenta.getId()) :
-                ResponseUtil.success(cuentaService.save(cuenta));
-    }
-
-    @PutMapping
-    public ResponseEntity<APIResponse<Cuenta>> updateCuenta(@RequestBody Cuenta cuenta){
-        return cuentaService.exists(cuenta.getId()) ? ResponseUtil.success(cuenta) :
-                ResponseUtil.badRequest("No existe una cuenta con id {0}", cuenta.getId());
-    }
-
-    @DeleteMapping("{id}")
-    public ResponseEntity<APIResponse<Cuenta>> deleteCuenta(@PathVariable("id") Long id){
-        if(cuentaService.exists(id)) {
-            cuentaService.delete(id);
-            return ResponseUtil.successDeleted("Se eliminó la cuenta con el id {0}", id);
+    public ResponseEntity<Cuenta> getTarjetaById(@PathVariable Long id) {
+        Cuenta cuenta = cuentaService.getById(id);
+        if (cuenta != null) {
+            return ResponseEntity.ok(cuenta);
         } else {
-            return ResponseUtil.badRequest("No se encontró la cuenta con el id {0}", id);
+            return ResponseEntity.notFound().build();
         }
     }
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<APIResponse<Cuenta>> handleException(Exception ex) {
-        return ResponseUtil.badRequest(ex.getMessage());
+    @PostMapping
+    public Cuenta createCuenta(@RequestBody Cuenta cuenta) {
+        return cuentaService.save(cuenta);
+    }
+    
+    @PutMapping
+    public ResponseEntity<Cuenta> updateCuenta(@PathVariable Long id, @RequestBody Cuenta cuentaDetails) {
+        Cuenta cuenta = cuentaService.getById(id);
+        if (cuenta != null) {
+            cuenta.setFechaApertura(cuentaDetails.getFechaApertura());
+            cuenta.setId(cuentaDetails.getId());
+            cuenta.setIdCliente(cuentaDetails.getIdCliente());
+            cuenta.setSaldo(cuentaDetails.getSaldo());
+            cuenta.setTipoCuenta(cuentaDetails.getTipoCuenta());
+            Cuenta updatedCuenta = cuentaService.save(cuenta);
+            return ResponseEntity.ok(updatedCuenta);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
-    @ExceptionHandler(ConstraintViolationException.class)
-    public ResponseEntity<APIResponse<Cuenta>> handleConstraintViolationException(ConstraintViolationException ex) {
-        return ResponseUtil.handleConstraintException(ex);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteCuenta(@PathVariable Long id) {
+        if (cuentaService.exists(id)) {
+            cuentaService.delete(id);
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
+
 }

@@ -1,11 +1,11 @@
-package controller;
+package imb.progra3.gc.grupo3.controller;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import entity.Tarjeta;
-import service.ITarjetaService;
+import imb.progra3.gc.grupo3.entity.Tarjeta;
+import imb.progra3.gc.grupo3.service.ITarjetaService;
 
 @RestController
 @RequestMapping("/tarjetas")
