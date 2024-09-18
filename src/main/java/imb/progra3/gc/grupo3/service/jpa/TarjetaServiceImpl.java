@@ -9,31 +9,31 @@ import imb.progra3.gc.grupo3.service.ITarjetaService;
 @Service
 public class TarjetaServiceImpl implements ITarjetaService {
 
-    @Autowired
-    private TarjetaRepository tarjetaRepository;
+	@Autowired
+	private TarjetaRepository repo;
+	
+	@Override
+	public List<Tarjeta> findAll() {
+		return repo.findAll();
+	}
 
-    @Override
-    public List<Tarjeta> getAll() {
-        return tarjetaRepository.findAll();
-    }
+	@Override
+	public Tarjeta findById(Long id) {
+		return repo.findById(id).orElse(null);
+	}
 
-    @Override
-    public Tarjeta getById(Long id) {
-        return tarjetaRepository.findById(id).orElse(null);
-    }
+	@Override
+	public boolean exists(Long id) {
+		return id == null ? false : repo.existsById(id);
+	}
 
-    @Override
-    public Tarjeta save(Tarjeta tarjeta) {
-        return tarjetaRepository.save(tarjeta);
-    }
+	@Override
+	public Tarjeta save(Tarjeta tarjeta) {
+		return repo.save(tarjeta);
+	}
 
-    @Override
-    public void delete(Long id) {
-        tarjetaRepository.deleteById(id);
-    }
-
-    @Override
-    public boolean exists(Long id) {
-        return tarjetaRepository.existsById(id);
-    }
+	@Override
+	public void delete(Long id) {
+		repo.deleteById(id);
+	}
 }

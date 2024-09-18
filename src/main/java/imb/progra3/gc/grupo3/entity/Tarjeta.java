@@ -8,7 +8,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-	public class Tarjeta {
+	public class Tarjeta extends BaseEntity {
 		
 		@Id
 		@GeneratedValue(strategy=GenerationType.IDENTITY)
