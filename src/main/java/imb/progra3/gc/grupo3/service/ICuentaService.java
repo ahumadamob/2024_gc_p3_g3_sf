@@ -14,4 +14,7 @@ public interface ICuentaService {
     void delete(Long id);
     boolean exists(Long id);
 	Cuenta getById(Long id);
+
+
+
 }

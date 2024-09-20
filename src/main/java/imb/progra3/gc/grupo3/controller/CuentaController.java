@@ -1,9 +1,12 @@
 package imb.progra3.gc.grupo3.controller;
 import imb.progra3.gc.grupo3.entity.Cuenta;
 import imb.progra3.gc.grupo3.service.ICuentaService;
+import imb.progra3.gc.grupo3.util.APIResponse;
+import imb.progra3.gc.grupo3.util.ResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.ConstraintViolationException;
 
 import java.util.List;
 
@@ -57,6 +60,16 @@ public class CuentaController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<APIResponse<Object>> handleException(Exception ex) {
+        return ResponseUtil.badRequest(ex.getMessage());
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<APIResponse<Cuenta>> handleConstraintViolationException(ConstraintViolationException ex) {
+        return ResponseUtil.handleConstraintException(ex);
     }
 
 }
