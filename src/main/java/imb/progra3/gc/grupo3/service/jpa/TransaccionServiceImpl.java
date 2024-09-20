@@ -9,10 +9,10 @@ import imb.progra3.gc.grupo3.service.ITransaccionService;
 
 @Service
 public class TransaccionServiceImpl implements ITransaccionService {
-	
+
 	@Autowired
 	private TransaccionRepository repo;
-	
+
 	@Override
 	public List<Transaccion> findAll() {
 		return repo.findAll();
@@ -48,5 +48,10 @@ public class TransaccionServiceImpl implements ITransaccionService {
 	public Transaccion getById(Long id) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public List<Transaccion> findByTipo(String tipo) {
+		return repo.findByTipoTransaccion(tipo);
 	}
 }
