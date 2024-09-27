@@ -1,64 +1,59 @@
 package imb.progra3.gc.grupo3.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import imb.progra3.gc.grupo3.entity.Ubicacion;
-import imb.progra3.gc.grupo3.service.IUbicacionService;
+import imb.progra3.gc.grupo3.service.UbicacionService;
 
+import java.util.List;
 
 @RestController
-@RequestMapping("api/ubicaciones")
+@RequestMapping("/api/ubicaciones")
 public class UbicacionController {
-	@Autowired
-	private IUbicacionService ubicacionService;
-	
-	public UbicacionController(IUbicacionService ubicacionService) {
-		this.ubicacionService = ubicacionService;
-	}
-	@GetMapping
-    public List<Ubicacion> getAll() {
-        return ubicacionService.getAll();
+
+    @Autowired
+    private UbicacionService ubicacionService;
+
+    // Obtener todas las ubicaciones
+    @GetMapping
+    public ResponseEntity<List<Ubicacion>> getUbicaciones() {
+        List<Ubicacion> ubicaciones = ubicacionService.getUbicaciones();
+        return new ResponseEntity<>(ubicaciones, HttpStatus.OK);
     }
-	@GetMapping("/{id}")
-    public ResponseEntity<Ubicacion> getById(@PathVariable Long id) {
-        Ubicacion ubicacion = ubicacionService.getById(id);
-        if (ubicacion != null) {
-            return ResponseEntity.ok(ubicacion);
+
+    // Obtener una ubicación por su ID
+    @GetMapping("/{id}")
+    public ResponseEntity<Ubicacion> getUbicacionById(@PathVariable Long id) {
+        return ubicacionService.getUbicacionById(id)
+            .map(ubicacion -> new ResponseEntity<>(ubicacion, HttpStatus.OK))
+            .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    // Guardar una nueva ubicación
+    @PostMapping
+    public ResponseEntity<Ubicacion> saveUbicacion(@RequestBody Ubicacion ubicacion) {
+        Ubicacion nuevaUbicacion = ubicacionService.saveUbicacion(ubicacion);
+        return new ResponseEntity<>(nuevaUbicacion, HttpStatus.CREATED);
+    }
+
+    // Actualizar una ubicación existente
+    @PutMapping("/{id}")
+    public ResponseEntity<Ubicacion> updateUbicacion(@PathVariable Long id, @RequestBody Ubicacion ubicacion) {
+        return ubicacionService.updateUbicacion(id, ubicacion)
+            .map(updatedUbicacion -> new ResponseEntity<>(updatedUbicacion, HttpStatus.OK))
+            .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    // Eliminar una ubicación
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteUbicacion(@PathVariable Long id) {
+        if (ubicacionService.deleteUbicacion(id)) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
-            return ResponseEntity.notFound().build();
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-	 @PostMapping
-	    public Ubicacion create(@RequestBody Ubicacion ubicacion) {
-	        return ubicacionService.save(ubicacion);
-	    }
-	 @PutMapping("/{id}")
-	    public ResponseEntity<Ubicacion> update(@PathVariable Long id, @RequestBody Ubicacion ubicacion) {
-	        if (ubicacionService.exists(id)) {
-	            ubicacion.setId(id);
-	            Ubicacion updatedUbicacion = ubicacionService.save(ubicacion);
-	            return ResponseEntity.ok(updatedUbicacion);
-	        } else {
-	            return ResponseEntity.notFound().build();
-	        }
-	    }
-	 @DeleteMapping("/{id}")
-	    public ResponseEntity<Void> delete(@PathVariable Long id) {
-	        if (!ubicacionService.exists(id)) {
-	            return ResponseEntity.notFound().build();
-	        }
-	        ubicacionService.delete(id);
-	        return ResponseEntity.noContent().build();
-	    }
 }
