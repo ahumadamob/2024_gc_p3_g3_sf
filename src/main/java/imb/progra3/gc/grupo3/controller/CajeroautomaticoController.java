@@ -68,4 +68,13 @@ public class CajeroautomaticoController {
         }
     }
 
-}
+    @GetMapping("/ubicacion/{ubicacion}")
+    public ResponseEntity<List<Cajeroautomatico>> findByUbicacion(@PathVariable String ubicacion) {
+        List<Cajeroautomatico> cajeroautomatico = (List<Cajeroautomatico>) service.findByUbicacion(ubicacion);
+        if (!cajeroautomatico.isEmpty()) {
+            return ResponseEntity.ok(cajeroautomatico);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    }

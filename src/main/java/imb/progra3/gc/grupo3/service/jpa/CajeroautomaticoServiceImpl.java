@@ -2,11 +2,14 @@ package imb.progra3.gc.grupo3.service.jpa;
 import java.util.List;
 
 import imb.progra3.gc.grupo3.entity.Cajeroautomatico;
+import org.apache.velocity.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import imb.progra3.gc.grupo3.repository.CajeroAutomaticoRepository;
 import imb.progra3.gc.grupo3.service.ICajeroAutomaticoService;
+import org.springframework.transaction.annotation.Transactional;
+
 @Service
 public class CajeroautomaticoServiceImpl implements ICajeroAutomaticoService {
     @Autowired
@@ -34,5 +37,15 @@ public class CajeroautomaticoServiceImpl implements ICajeroAutomaticoService {
 
     public void delete(Long id) {
         repository.deleteById(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Cajeroautomatico> findByUbicacion(String ubicacion) {
+        List<Cajeroautomatico> cajeroautomatico = repository.findByUbicacion(ubicacion);
+        if (cajeroautomatico.isEmpty()){
+            throw new ResourceNotFoundException("No se encontró cajero en la ubicación: " + ubicacion);
+        }
+        return cajeroautomatico;
     }
 }
