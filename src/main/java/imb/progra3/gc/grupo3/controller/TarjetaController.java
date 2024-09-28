@@ -53,6 +53,11 @@ public class TarjetaController {
 		}		
 	}
 	
+	@GetMapping("/{numeroTarjeta}")
+    public List<Tarjeta> findBynumeroTarjeta(@PathVariable String numeroTarjeta) {
+        return tarjetaService.findBynumeroTarjeta(numeroTarjeta);
+    }
+	
     @ExceptionHandler(Exception.class)
     public ResponseEntity<APIResponse<Object>> handleException(Exception ex) {    	
     	return ResponseUtil.badRequest(ex.getMessage());

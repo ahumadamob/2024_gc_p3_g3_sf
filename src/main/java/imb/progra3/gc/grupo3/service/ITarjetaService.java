@@ -11,4 +11,5 @@ public interface ITarjetaService {
 	public boolean exists(Long id);
 	public Tarjeta save(Tarjeta tarjeta);
 	public void delete(Long id);
+	public List<Tarjeta> findBynumeroTarjeta(String numeroTarjeta);
 }

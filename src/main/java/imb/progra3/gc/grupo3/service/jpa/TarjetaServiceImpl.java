@@ -36,4 +36,9 @@ public class TarjetaServiceImpl implements ITarjetaService {
 	public void delete(Long id) {
 		repo.deleteById(id);
 	}
+	
+	@Override
+	public List<Tarjeta> findBynumeroTarjeta(String numeroTarjeta) {
+		return repo.findBynumeroTarjeta(numeroTarjeta);
+	}
 }
