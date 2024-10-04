@@ -6,10 +6,12 @@ import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.MappedSuperclass;
 
+@MappedSuperclass
 public abstract class BaseEntity {
 	
-	 @Id
+	 	@Id
 	    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	    private Long id;
 
@@ -19,7 +21,7 @@ public abstract class BaseEntity {
 	    @Column(name = "updated_at")
 	    private LocalDateTime updatedAt;
 
-	    // Getters and Setters
+	   
 	    public Long getId() {
 	        return id;
 	    }

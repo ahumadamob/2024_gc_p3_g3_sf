@@ -9,7 +9,7 @@ import jakarta.persistence.Id;
 
 
 @Entity
-public class Cajeroautomatico {
+public class Cajeroautomatico extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

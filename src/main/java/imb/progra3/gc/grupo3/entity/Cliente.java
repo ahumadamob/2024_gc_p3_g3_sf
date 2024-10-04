@@ -6,7 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class Cliente {
+public class Cliente extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  long id;
@@ -15,7 +15,7 @@ public class Cliente {
     private String direccion;
     private String telefono;
     private String correoElectronico;
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
