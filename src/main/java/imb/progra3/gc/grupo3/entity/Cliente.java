@@ -9,12 +9,13 @@ import jakarta.persistence.Id;
 public class Cliente extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private  long id;
+    private  Long id;
     private String nombre;
     private String apellido;
     private String direccion;
     private String telefono;
     private String correoElectronico;
+    
     public Long getId() {
         return id;
     }
