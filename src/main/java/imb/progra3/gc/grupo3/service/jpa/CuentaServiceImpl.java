@@ -14,10 +14,7 @@ public class CuentaServiceImpl implements ICuentaService {
     @Autowired
     private CuentaRepository cuentaRepository;
 
-    @Override
-    public List<Cuenta> findAll() {
-        return cuentaRepository.findAll();
-    }
+
 
     @Override
     public List<Cuenta> getAll() {

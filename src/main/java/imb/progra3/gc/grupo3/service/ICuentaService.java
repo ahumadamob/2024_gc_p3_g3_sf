@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ICuentaService {
 
-    List<Cuenta> findAll();
+
     List<Cuenta> getAll();
     Cuenta findById(Long id);
 
