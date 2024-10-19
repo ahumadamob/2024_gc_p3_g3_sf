@@ -1,59 +1,57 @@
 package imb.progra3.gc.grupo3.controller;
 
+import imb.progra3.gc.grupo3.entity.Ubicacion;
+import imb.progra3.gc.grupo3.service.IUbicacionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import imb.progra3.gc.grupo3.entity.Ubicacion;
-import imb.progra3.gc.grupo3.service.UbicacionService;
-
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/ubicaciones")
+
 public class UbicacionController {
-
     @Autowired
-    private UbicacionService ubicacionService;
+    private IUbicacionService ubicacionService;
 
-    // Obtener todas las ubicaciones
     @GetMapping
-    public ResponseEntity<List<Ubicacion>> getUbicaciones() {
-        List<Ubicacion> ubicaciones = ubicacionService.getUbicaciones();
-        return new ResponseEntity<>(ubicaciones, HttpStatus.OK);
+    public ResponseEntity<List<Ubicacion>> getAll() {
+        List<Ubicacion> ubicaciones = ubicacionService.getAll();
+        return ResponseEntity.ok(ubicaciones);
     }
 
-    // Obtener una ubicación por su ID
     @GetMapping("/{id}")
-    public ResponseEntity<Ubicacion> getUbicacionById(@PathVariable Long id) {
-        return ubicacionService.getUbicacionById(id)
-            .map(ubicacion -> new ResponseEntity<>(ubicacion, HttpStatus.OK))
-            .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    public ResponseEntity<Ubicacion> getById(@PathVariable Long id) {
+        Ubicacion ubicacion = ubicacionService.getById(id);
+    	return ubicacion != null ? ResponseEntity.ok(ubicacion):ResponseEntity.notFound().build();
     }
 
-    // Guardar una nueva ubicación
-    @PostMapping
-    public ResponseEntity<Ubicacion> saveUbicacion(@RequestBody Ubicacion ubicacion) {
-        Ubicacion nuevaUbicacion = ubicacionService.saveUbicacion(ubicacion);
-        return new ResponseEntity<>(nuevaUbicacion, HttpStatus.CREATED);
+    @PostMapping("/ubicaciones")
+    public ResponseEntity<Ubicacion> save(@RequestBody Ubicacion ubicacion) {
+        Ubicacion savedUbicacion = ubicacionService.save(ubicacion);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedUbicacion);
     }
 
-    // Actualizar una ubicación existente
-    @PutMapping("/{id}")
-    public ResponseEntity<Ubicacion> updateUbicacion(@PathVariable Long id, @RequestBody Ubicacion ubicacion) {
-        return ubicacionService.updateUbicacion(id, ubicacion)
-            .map(updatedUbicacion -> new ResponseEntity<>(updatedUbicacion, HttpStatus.OK))
-            .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
-    }
-
-    // Eliminar una ubicación
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUbicacion(@PathVariable Long id) {
-        if (ubicacionService.deleteUbicacion(id)) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    @PutMapping("/ubicaciones/{id}")
+    public ResponseEntity<Ubicacion> update(@PathVariable Long id, @RequestBody Ubicacion ubicacion) {
+        if (ubicacionService.exists(id)) {
+        	ubicacion.setId(id);
+            Ubicacion updatedUbicacion = ubicacionService.save(ubicacion);   
+            return ResponseEntity.ok(updatedUbicacion);
+        }else { 
+        	return ResponseEntity.notFound().build();
         }
     }
+
+    @DeleteMapping("/ubicacion/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        if (ubicacionService.exists(id)) {
+           ubicacionService.delete(id);
+           return ResponseEntity.noContent().build();
+    } else {
+    	return ResponseEntity.notFound().build();
+    }
+}
 }
