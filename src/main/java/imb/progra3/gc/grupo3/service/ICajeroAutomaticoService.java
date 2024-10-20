@@ -9,4 +9,5 @@ public interface ICajeroAutomaticoService {
     Cajeroautomatico findById(Long id);
     Cajeroautomatico save(Cajeroautomatico cajeroautomatico);
     void delete(Long id);
+    List<Cajeroautomatico> findByUbicacion(String ubicacion);
     }
