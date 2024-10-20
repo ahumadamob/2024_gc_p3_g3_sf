@@ -1,8 +1,7 @@
 package imb.progra3.gc.grupo3.service;
 
-import java.util.List;
 import imb.progra3.gc.grupo3.entity.Ubicacion;
-
+import java.util.List;
 
 public interface IUbicacionService {
 	List<Ubicacion> getAll();
