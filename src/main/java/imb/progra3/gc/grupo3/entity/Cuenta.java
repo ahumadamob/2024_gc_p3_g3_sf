@@ -18,6 +18,7 @@ public class Cuenta {
     private BigDecimal saldo;
     private LocalDate fechaApertura;
     private Long idCliente;
+    private String numeroCuenta;
 
     // Getters y setters
     public Long getId() {
@@ -58,6 +59,13 @@ public class Cuenta {
 
     public void setIdCliente(Long idCliente) {
         this.idCliente = idCliente;
+    }
+    public String getNumeroCuenta() {
+        return numeroCuenta;
+    }
+
+    public void setNumeroCuenta(String numeroCuenta) {
+        this.numeroCuenta = numeroCuenta;
     }
 }
 
