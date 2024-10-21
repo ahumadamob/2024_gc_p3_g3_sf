@@ -1,9 +1,13 @@
 package imb.progra3.gc.grupo3.controller;
 import imb.progra3.gc.grupo3.entity.Cuenta;
 import imb.progra3.gc.grupo3.service.ICuentaService;
+import imb.progra3.gc.grupo3.util.APIResponse;
+import imb.progra3.gc.grupo3.util.ResponseUtil;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.ConstraintViolationException;
 
 import java.util.List;
 
@@ -14,19 +18,20 @@ public class CuentaController {
     private ICuentaService cuentaService;
 
     @GetMapping
-    public List<Cuenta> getAllTarjetas() {
-        return cuentaService.getAll();
+    public ResponseEntity<APIResponse<List<Cuenta>>> getAll() {
+        List<Cuenta> cuentas = cuentaService.getAll();
+        return ResponseUtil.success(cuentas);
     }
 
-    @GetMapping("{id}")
-    public ResponseEntity<Cuenta> getTarjetaById(@PathVariable Long id) {
-        Cuenta cuenta = cuentaService.getById(id);
-        if (cuenta != null) {
-            return ResponseEntity.ok(cuenta);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<APIResponse<Cuenta>> getById(@PathVariable Long id) {
+        Cuenta cuenta = cuentaService.findById(id);
+        return cuenta != null ? ResponseUtil.success(cuenta) : ResponseUtil.notFound("Cuenta no encontrada");
     }
+
+
+
 
     @PostMapping
     public Cuenta createCuenta(@RequestBody Cuenta cuenta) {
@@ -57,6 +62,16 @@ public class CuentaController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<APIResponse<Object>> handleException(Exception ex) {
+        return ResponseUtil.badRequest(ex.getMessage());
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<APIResponse<Cuenta>> handleConstraintViolationException(ConstraintViolationException ex) {
+        return ResponseUtil.handleConstraintException(ex);
     }
 
 }

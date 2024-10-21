@@ -4,17 +4,31 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private  long id;
+    private long id;
+    
+    @NotNull(message = "El nombre no puede ser nulo")
     private String nombre;
+    
+    @NotNull(message = "El apellido no puede ser nulo")
     private String apellido;
+    
     private String direccion;
     private String telefono;
     private String correoElectronico;
+    
+    @NotNull(message = "La edad no puede ser nula")
+    @Min(value = 0, message = "La edad debe ser un número positivo")
+    private Integer edad;
+
+    // Getters and setters
+
     public long getId() {
         return id;
     }
@@ -61,5 +75,13 @@ public class Cliente {
 
     public void setCorreoElectronico(String correoElectronico) {
         this.correoElectronico = correoElectronico;
+    }
+
+    public Integer getEdad() {
+        return edad;
+    }
+
+    public void setEdad(Integer edad) {
+        this.edad = edad;
     }
 }
