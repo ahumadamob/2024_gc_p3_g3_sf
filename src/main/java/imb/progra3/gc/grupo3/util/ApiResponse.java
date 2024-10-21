@@ -1,18 +1,18 @@
 package imb.progra3.gc.grupo3.util;
 
-public class APIResponse<T> {
+public class ApiResponse<T> {
 
     private final boolean success;
     private final String message;
     private final T data;
 
-    public APIResponse(boolean success, String message, T data) {
+    public ApiResponse(boolean success, String message, T data) {
         this.success = success;
         this.message = message;
         this.data = data;
     }
 
-    public APIResponse(boolean success, String message) {
+    public ApiResponse(boolean success, String message) {
         this(success, message, null);
     }
 

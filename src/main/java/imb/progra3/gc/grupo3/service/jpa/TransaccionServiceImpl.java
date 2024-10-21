@@ -10,48 +10,41 @@ import imb.progra3.gc.grupo3.service.ITransaccionService;
 @Service
 public class TransaccionServiceImpl implements ITransaccionService {
 
-	@Autowired
-	private TransaccionRepository repo;
+    @Autowired
+    private TransaccionRepository repo;
 
-	@Override
-	public List<Transaccion> findAll() {
-		return repo.findAll();
-	}
+    @Override
+    public List<Transaccion> findAll() {
+        return repo.findAll(); 
+    }
 
-	@Override
-	public Transaccion findById(Long id) {
-		return repo.findById(id).orElse(null);
-	}
+    @Override
+    public Transaccion findById(Long id) {
+        return repo.findById(id).orElse(null); 
+    }
 
-	@Override
-	public boolean exists(Long id) {
-		return id == null ? false : repo.existsById(id);
-	}
+    @Override
+    public boolean exists(Long id) {
+        return repo.existsById(id); 
+    }
 
-	@Override
-	public Transaccion save(Transaccion transaccion) {
-		return repo.save(transaccion);
-	}
+    @Override
+    public Transaccion save(Transaccion transaccion) {
+        return repo.save(transaccion);
+    }
 
-	@Override
-	public void delete(Long id) {
-		repo.deleteById(id);
-	}
+    @Override
+    public void delete(Long id) {
+        repo.deleteById(id);
+    }
 
-	@Override
-	public List<Transaccion> getAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public List<Transaccion> findByTipo(String tipo) {
+        return repo.findByTipoTransaccion(tipo);
+    }
 
-	@Override
-	public Transaccion getById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Transaccion> findByTipo(String tipo) {
-		return repo.findByTipoTransaccion(tipo);
-	}
+    @Override
+    public Transaccion getById(Long id) {
+        return findById(id);
+    }
 }
