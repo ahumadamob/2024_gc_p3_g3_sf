@@ -12,7 +12,6 @@ import jakarta.persistence.Id;
 public class Cajeroautomatico extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
     private String ubicacion;
 
@@ -21,13 +20,6 @@ public class Cajeroautomatico extends BaseEntity {
     private String estado;
 
     // Getters y Setters
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getUbicacion() {
         return ubicacion;

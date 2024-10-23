@@ -13,19 +13,12 @@ public class Transaccion extends BaseEntity {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+ 
     private String tipoTransaccion;
     private BigDecimal monto;
     private LocalDateTime fechaHora;
     private Long idCuenta;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getTipoTransaccion() {
         return tipoTransaccion;

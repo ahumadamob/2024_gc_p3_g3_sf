@@ -13,20 +13,14 @@ public class Cuenta extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  
     private String tipoCuenta;
     private BigDecimal saldo;
     private LocalDate fechaApertura;
     private Long idCliente;
 
     // Getters y setters
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getTipoCuenta() {
         return tipoCuenta;

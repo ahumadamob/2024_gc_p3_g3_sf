@@ -12,7 +12,6 @@ import jakarta.persistence.Id;
 		
 		@Id
 		@GeneratedValue(strategy=GenerationType.IDENTITY)
-		private Long Id;
 		
 		private String numeroTarjeta;
 		
@@ -21,14 +20,6 @@ import jakarta.persistence.Id;
 		private String estado;
 		
 		private Long IdCuenta;
-
-		public Long getId() {
-			return Id;
-		}
-
-		public void setId(Long id) {
-			Id = id;
-		}
 
 		public String getNumeroTarjeta() {
 			return numeroTarjeta;
