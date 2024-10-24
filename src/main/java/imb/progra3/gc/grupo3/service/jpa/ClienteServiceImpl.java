@@ -1,4 +1,4 @@
-package imb.progra3.gc.grupo3.service.impl;
+package imb.progra3.gc.grupo3.service.jpa;
 
 import imb.progra3.gc.grupo3.entity.Cliente;
 import imb.progra3.gc.grupo3.repository.ClienteRepository;
