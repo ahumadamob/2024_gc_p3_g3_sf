@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Valid;
 import java.util.List;
 
@@ -64,4 +65,6 @@ public class GlobalExceptionHandler {
     public ResponseEntity<APIResponse<Object>> handleValidationException(ConstraintViolationException ex) {
         return ResponseUtil.handleConstraintException(ex);
     }
+}
+
 }
