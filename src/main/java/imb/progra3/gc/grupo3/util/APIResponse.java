@@ -1,38 +1,34 @@
 package imb.progra3.gc.grupo3.util;
 
-public class APIResponse<T> {
+import java.util.List;
 
-    private boolean success;
-    private String message;
+public class APIResponse <T> {
+
+    private int status;
+    private List <String> messages;
     private T data;
 
-    public APIResponse(boolean success, String message, T data) {
-        this.success = success;
-        this.message = message;
+    public APIResponse (int status, List <String> messages, T data) {
+        this.status=status;
+        this.messages= messages;
         this.data = data;
     }
 
-    // Getters y setters
-    public boolean isSuccess() {
-        return success;
+    public int getStatus() {
+        return status;
     }
-
-    public void setSuccess(boolean success) {
-        this.success = success;
+    public void setStatus(int status) {
+        this.status = status;
     }
-
-    public String getMessage() {
-        return message;
+    public List<String> getMessages() {
+        return messages;
     }
-
-    public void setMessage(String message) {
-        this.message = message;
+    public void setMessages(List<String> messages) {
+        this.messages = messages;
     }
-
     public T getData() {
         return data;
     }
-
     public void setData(T data) {
         this.data = data;
     }
