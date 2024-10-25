@@ -40,4 +40,9 @@ public class UbicacionServiceImpl implements IUbicacionService{
 	    public boolean exists(Long id) {
 	        return ubicacionRepository.existsById(id);
 	    }
+	 // Implementación del método mágico
+	    @Override
+	    public List<Ubicacion> findByCiudad(String ciudad) {
+	        return ubicacionRepository.findByCiudad(ciudad);
+	    }
 }

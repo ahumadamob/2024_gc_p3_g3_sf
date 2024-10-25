@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 @RestController
 @RequestMapping("/api/ubicaciones")
 
@@ -23,11 +24,20 @@ public class UbicacionController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Ubicacion> getById(@PathVariable Long id) {
+    public ResponseEntity<Ubicacion> getById(@PathVariable("id") Long id) {
         Ubicacion ubicacion = ubicacionService.getById(id);
     	return ubicacion != null ? ResponseEntity.ok(ubicacion):ResponseEntity.notFound().build();
     }
-
+    
+ // Método mágico
+    @GetMapping("/filter/{ciudad}")
+    public ResponseEntity<List<Ubicacion>> filterUbicaciones(@PathVariable("ciudad") String ciudad) {
+        List<Ubicacion> ubicaciones = ubicacionService.findByCiudad(ciudad);
+        return ubicaciones.isEmpty() 
+            ? ResponseEntity.status(HttpStatus.NOT_FOUND).body(null) 
+            : ResponseEntity.ok(ubicaciones);
+    }    
+    
     @PostMapping("/ubicaciones")
     public ResponseEntity<Ubicacion> save(@RequestBody Ubicacion ubicacion) {
         Ubicacion savedUbicacion = ubicacionService.save(ubicacion);

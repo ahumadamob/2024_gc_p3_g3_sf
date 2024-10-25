@@ -9,4 +9,5 @@ public interface IUbicacionService {
 	Ubicacion save(Ubicacion ubicacion);
 	void delete(Long id);
 	boolean exists(Long id);
+	List<Ubicacion> findByCiudad(String ciudad);
 }
