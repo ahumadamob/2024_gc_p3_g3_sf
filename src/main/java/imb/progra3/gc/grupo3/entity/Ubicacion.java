@@ -43,4 +43,39 @@ public class Ubicacion {
 		this.direccion = direccion;
 	}
 
+	public Object getNombre() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void setNombre(Object nombre) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public Object getLatitud1() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Object getLatitud() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Object getLongitud() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void setLatitud1(Object latitud1) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void setLatitud(Object latitud1) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

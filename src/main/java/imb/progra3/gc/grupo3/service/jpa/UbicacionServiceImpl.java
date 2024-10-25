@@ -1,6 +1,8 @@
 package imb.progra3.gc.grupo3.service.jpa;
 
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import imb.progra3.gc.grupo3.entity.Ubicacion;
@@ -20,7 +22,8 @@ public class UbicacionServiceImpl implements IUbicacionService{
 
 	    @Override
 	    public Ubicacion getById(Long id) {
-	        return ubicacionRepository.findById(id).orElse(null);
+	    	Optional<Ubicacion> optionalUbicacion = ubicacionRepository.findById(id);
+	        return optionalUbicacion.orElse(null);
 	    }
 
 	    @Override
@@ -36,5 +39,10 @@ public class UbicacionServiceImpl implements IUbicacionService{
 	    @Override
 	    public boolean exists(Long id) {
 	        return ubicacionRepository.existsById(id);
+	    }
+	 // Implementación del método mágico
+	    @Override
+	    public List<Ubicacion> findByCiudad(String ciudad) {
+	        return ubicacionRepository.findByCiudad(ciudad);
 	    }
 }
