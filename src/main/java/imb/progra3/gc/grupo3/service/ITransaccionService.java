@@ -19,4 +19,9 @@ public interface ITransaccionService {
 
 	public Transaccion getById(Long id);
 
+	// nuevo metodo
+	void updateEstadoTransaccion(Long id, String estado);
+	
+
+
 }

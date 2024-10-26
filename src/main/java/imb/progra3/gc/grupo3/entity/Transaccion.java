@@ -23,6 +23,8 @@ public class Transaccion {
     private BigDecimal monto;
     private LocalDateTime fechaHora;
     private Long idCuenta;
+    //nuevo atributo
+    private String estado;
 
     public Long getId() {
         return id;
@@ -62,5 +64,12 @@ public class Transaccion {
 
     public void setIdCuenta(Long idCuenta) {
         this.idCuenta = idCuenta;
+    }
+    //nuevo atributo
+    public String getEstado() {
+    	return estado;
+    }
+    public void setEstado(String estado) {
+    	this.estado = estado;
     }
 }
