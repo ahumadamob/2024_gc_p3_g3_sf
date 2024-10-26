@@ -2,6 +2,7 @@ package imb.progra3.gc.grupo3.controller;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,8 +41,18 @@ public class TarjetaController {
 	@PutMapping
 	public ResponseEntity<APIResponse<Tarjeta>> updateTarjeta(@RequestBody Tarjeta tarjeta){
 		return 	tarjetaService.exists(tarjeta.getId())? ResponseUtil.success(tarjeta):
-				ResponseUtil.badRequest("No existe un projecto con id {0}", tarjeta.getId());
+				ResponseUtil.badRequest("No existe un tarjeta con id {0}", tarjeta.getId());
 	}
+	
+	 @PutMapping("/{id}/bloquear")
+	    public ResponseEntity<String> bloquearTarjeta(@PathVariable Long id) {
+	        boolean resultado = tarjetaService.bloquearTarjeta(id);
+	        if (resultado) {
+	            return ResponseEntity.ok("La tarjeta ha sido bloqueada con éxito.");
+	        } else {
+	            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("La tarjeta no existe o ya está bloqueada.");
+	        }
+	    }
 	
 	@DeleteMapping("{id}")
 	public ResponseEntity<APIResponse<Object>> deleteTarjeta(@PathVariable("id") Long id){
@@ -67,4 +78,5 @@ public class TarjetaController {
     public ResponseEntity<APIResponse<Tarjeta>> handleConstraintViolationException(ConstraintViolationException ex) {
     	return ResponseUtil.handleConstraintException(ex);
     }
+         
 }
