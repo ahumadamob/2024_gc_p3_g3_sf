@@ -6,8 +6,15 @@ import java.util.List;
 
 public interface ICajeroAutomaticoService {
     List<Cajeroautomatico> findAll();
+
     Cajeroautomatico findById(Long id);
+
     Cajeroautomatico save(Cajeroautomatico cajeroautomatico);
+
     void delete(Long id);
+
     List<Cajeroautomatico> findByUbicacion(String ubicacion);
-    }
+
+    void actualizarUbicacion(Long id, String nuevaUbicacion);
+
+}

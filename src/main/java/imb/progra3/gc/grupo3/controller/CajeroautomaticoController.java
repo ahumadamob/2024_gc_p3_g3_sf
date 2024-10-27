@@ -1,4 +1,5 @@
 package imb.progra3.gc.grupo3.controller;
+
 import java.util.List;
 
 import imb.progra3.gc.grupo3.entity.Cajeroautomatico;
@@ -16,14 +17,14 @@ import org.springframework.web.bind.annotation.RestController;
 import imb.progra3.gc.grupo3.service.ICajeroAutomaticoService;
 
 @RestController
-@RequestMapping(path ="/api/Cajeroautomatico")
+@RequestMapping(path = "/api/Cajeroautomatico")
 
 public class CajeroautomaticoController {
     @Autowired
     private ICajeroAutomaticoService service;
 
     @GetMapping
-    public List<Cajeroautomatico> getAll(){
+    public List<Cajeroautomatico> getAll() {
         return service.findAll();
     }
 
@@ -40,20 +41,36 @@ public class CajeroautomaticoController {
     @PostMapping
     public ResponseEntity<String> create(@RequestBody Cajeroautomatico cajeroautomatico) {
         @SuppressWarnings("unused")
-		Cajeroautomatico createdCajeroautomatico = service.save(cajeroautomatico);
-        return new ResponseEntity<>("El cajero fue creado con exito" , HttpStatus.CREATED);
+        Cajeroautomatico createdCajeroautomatico = service.save(cajeroautomatico);
+        return new ResponseEntity<>("El cajero fue creado con exito", HttpStatus.CREATED);
     }
 
-	@PutMapping("/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<String> update(@PathVariable Long id, @RequestBody Cajeroautomatico cajeroautomatico) {
         Cajeroautomatico existingCajeroautomatico = service.findById(id);
         if (existingCajeroautomatico != null) {
             cajeroautomatico.setId(id);
             @SuppressWarnings("unused")
-			Cajeroautomatico updatedCajeroautomatico = service.save(cajeroautomatico);
+            Cajeroautomatico updatedCajeroautomatico = service.save(cajeroautomatico);
             return new ResponseEntity<>("El cajero fue actualizado con exito.", HttpStatus.OK);
         } else {
             return new ResponseEntity<>("No se encontró cajero para actualizar.", HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PutMapping("/{id}/ubicacion")
+    public ResponseEntity<String> updateUbicacion(@PathVariable Long id, @RequestBody Cajeroautomatico cajeroautomaticoRequest) {
+        try {
+            Cajeroautomatico existingCajeroautomatico = service.findById(id);
+
+            if (existingCajeroautomatico == null) {
+                return new ResponseEntity<>("No se encontró cajero para actualizar la ubicación.", HttpStatus.NOT_FOUND);
+            }
+            existingCajeroautomatico.setUbicacion(cajeroautomaticoRequest.getUbicacion());
+            service.save(existingCajeroautomatico);
+            return new ResponseEntity<>("La ubicación del cajero fue actualizada con éxito.", HttpStatus.OK);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage() + " Error al actualizar la ubicación");
         }
     }
 
@@ -77,4 +94,4 @@ public class CajeroautomaticoController {
             return ResponseEntity.notFound().build();
         }
     }
-    }
+}
