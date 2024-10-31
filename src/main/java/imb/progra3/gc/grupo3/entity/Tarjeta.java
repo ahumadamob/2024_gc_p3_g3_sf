@@ -21,7 +21,7 @@ import jakarta.persistence.Id;
 		private String estado;
 		
 		private Long IdCuenta;
-
+		
 		public Long getId() {
 			return Id;
 		}
@@ -61,7 +61,6 @@ import jakarta.persistence.Id;
 		public void setIdCuenta(Long idCuenta) {
 			IdCuenta = idCuenta;
 		}
-		
 		
 	}
 	

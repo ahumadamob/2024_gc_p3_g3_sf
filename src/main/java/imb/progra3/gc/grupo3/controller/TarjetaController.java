@@ -45,14 +45,14 @@ public class TarjetaController {
 	}
 	
 	 @PutMapping("/{id}/bloquear")
-	    public ResponseEntity<String> bloquearTarjeta(@PathVariable Long id) {
-	        boolean resultado = tarjetaService.bloquearTarjeta(id);
-	        if (resultado) {
-	            return ResponseEntity.ok("La tarjeta ha sido bloqueada con éxito.");
-	        } else {
-	            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("La tarjeta no existe o ya está bloqueada.");
-	        }
-	    }
+	 public ResponseEntity<APIResponse<Tarjeta>> bloquearTarjeta(@PathVariable("id") Long id) {
+		 boolean resultado = tarjetaService.bloquearTarjeta(id);
+		    if (resultado) {
+		        return ResponseUtil.successResponse("La tarjeta ha sido bloqueada con éxito.", null);
+		    } else {
+		        return ResponseUtil.errorResponse("La tarjeta no existe o ya está bloqueada.", HttpStatus.NOT_FOUND);
+		    }
+		}
 	
 	@DeleteMapping("{id}")
 	public ResponseEntity<APIResponse<Object>> deleteTarjeta(@PathVariable("id") Long id){
