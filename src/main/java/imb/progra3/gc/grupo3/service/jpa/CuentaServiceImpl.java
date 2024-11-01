@@ -55,4 +55,16 @@ public class CuentaServiceImpl implements ICuentaService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+    @Override
+    public boolean actualizarSaldo(Long id, Double nuevoSaldo) {
+        if (nuevoSaldo == null || nuevoSaldo < 0) {
+            return false;
+        }
+        return cuentaRepository.findById(id).map(cuenta -> {
+            cuenta.setSaldo(nuevoSaldo);
+            cuentaRepository.save(cuenta);
+            return true;
+        }).orElse(false);
+    }
 }

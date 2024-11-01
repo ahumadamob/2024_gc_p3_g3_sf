@@ -54,6 +54,16 @@ public class CuentaController {
         }
     }
 
+    @PutMapping("/{id}/actualizarSaldo")
+    public ResponseEntity<String> actualizarSaldo(@PathVariable Long id, @RequestBody Double nuevoSaldo) {
+        boolean actualizado = cuentaService.actualizarSaldo(id, nuevoSaldo);
+        if (actualizado) {
+            return ResponseEntity.ok("Saldo actualizado correctamente.");
+        } else {
+            return ResponseEntity.badRequest().body("No se pudo actualizar el saldo. La cuenta no existe o el saldo es inválido.");
+        }
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCuenta(@PathVariable Long id) {
         if (cuentaService.exists(id)) {

@@ -16,5 +16,5 @@ public interface ICuentaService {
 	Cuenta getById(Long id);
 
 
-
+    boolean actualizarSaldo(Long id, Double nuevoSaldo);
 }
