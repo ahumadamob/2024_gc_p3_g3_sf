@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -54,6 +55,20 @@ public class UbicacionController {
         	return ResponseEntity.notFound().build();
         }
     }
+   /* @PutMapping("/ubicaciones/{id}/descripcion")
+    public ResponseEntity<String> updateDescripcion(@PathVariable("id") Long id, @RequestBody Map<String, String> payload) {
+        String nuevaDescripcion = payload.get("descripcion");
+        if (nuevaDescripcion == null || nuevaDescripcion.trim().isEmpty()) {
+            return ResponseEntity.badRequest().body("Se requiere una descripción válida.");
+        }
+        
+        if (!ubicacionService.exists(id)) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Ubicación no encontrada.");
+        }
+        
+        ubicacionService.updateDescripcion(id, nuevaDescripcion);
+        return ResponseEntity.ok("Descripción actualizada con éxito.");
+    }
 
     @DeleteMapping("/ubicacion/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
@@ -63,5 +78,23 @@ public class UbicacionController {
     } else {
     	return ResponseEntity.notFound().build();
     }
-}
+}*/
+    @PutMapping("/ubicaciones/{id}/descripcion")
+    public ResponseEntity<String> updateDescripcion(@PathVariable("id") Long id, @RequestBody Map<String, String> payload) {
+        // Verificar si la ubicación existe primero
+        if (!ubicacionService.exists(id)) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Ubicación no encontrada.");
+        }
+        
+        String nuevaDescripcion = payload.get("descripcion");
+        
+        // Validar que la descripción no sea nula o vacía
+        if (nuevaDescripcion == null || nuevaDescripcion.trim().isEmpty()) {
+            return ResponseEntity.badRequest().body("Se requiere una descripción válida.");
+        }
+        
+        ubicacionService.updateDescripcion(id, nuevaDescripcion);
+        return ResponseEntity.ok("Descripción actualizada con éxito.");
+    }
+
 }

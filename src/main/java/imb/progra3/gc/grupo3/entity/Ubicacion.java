@@ -13,6 +13,7 @@ public class Ubicacion {
 	private String pais;
 	private String ciudad;
 	private String direccion;
+	private String descripcion; 
 	
 	public Ubicacion() {}
 
@@ -52,7 +53,13 @@ public class Ubicacion {
 		// TODO Auto-generated method stub
 		
 	}
+	public String getDescripcion() {
+        return descripcion;
+    }
 
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
 	public Object getLatitud1() {
 		// TODO Auto-generated method stub
 		return null;

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import imb.progra3.gc.grupo3.entity.Ubicacion;
 import imb.progra3.gc.grupo3.repository.UbicacionRepository;
 import imb.progra3.gc.grupo3.service.IUbicacionService;
+import jakarta.persistence.EntityNotFoundException;
 
 
 @Service
@@ -45,4 +46,17 @@ public class UbicacionServiceImpl implements IUbicacionService{
 	    public List<Ubicacion> findByCiudad(String ciudad) {
 	        return ubicacionRepository.findByCiudad(ciudad);
 	    }
+	    @Override
+	    public void updateDescripcion(Long id, String nuevaDescripcion) {
+	        Optional<Ubicacion> ubicacionOptional = ubicacionRepository.findById(id);
+	        
+	        if (ubicacionOptional.isPresent()) {
+	            Ubicacion ubicacion = ubicacionOptional.get();
+	            ubicacion.setDescripcion(nuevaDescripcion);  // Actualiza solo la descripción
+	            ubicacionRepository.save(ubicacion);  // Guarda los cambios
+	        } else {
+	            throw new EntityNotFoundException("Ubicación no encontrada para el ID: " + id);
+	        }
+	    }
+
 }
