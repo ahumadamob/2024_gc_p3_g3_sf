@@ -12,4 +12,6 @@ public interface ITarjetaService {
 	public Tarjeta save(Tarjeta tarjeta);
 	public void delete(Long id);
 	public List<Tarjeta> findBynumeroTarjeta(String numeroTarjeta);
+	boolean bloquearTarjeta(Long id);
+
 }
