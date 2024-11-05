@@ -62,7 +62,6 @@ public class CajeroautomaticoController {
     public ResponseEntity<String> updateUbicacion(@PathVariable Long id, @RequestBody Cajeroautomatico cajeroautomaticoRequest) {
         try {
             Cajeroautomatico existingCajeroautomatico = service.findById(id);
-
             if (existingCajeroautomatico == null) {
                 return new ResponseEntity<>("No se encontró cajero para actualizar la ubicación.", HttpStatus.NOT_FOUND);
             }
