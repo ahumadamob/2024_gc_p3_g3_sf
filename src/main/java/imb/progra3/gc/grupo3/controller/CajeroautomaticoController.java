@@ -59,20 +59,38 @@ public class CajeroautomaticoController {
     }
 
     @PutMapping("/{id}/ubicacion")
-    public ResponseEntity<String> updateUbicacion(@PathVariable Long id, @RequestBody Cajeroautomatico cajeroautomaticoRequest) {
+    public ResponseEntity<APIResponse<Object>> updateUbicacion(@PathVariable Long id, @RequestBody Cajeroautomatico cajeroautomaticoRequest) {
         try {
             Cajeroautomatico existingCajeroautomatico = service.findById(id);
+
             if (existingCajeroautomatico == null) {
-                return new ResponseEntity<>("No se encontró cajero para actualizar la ubicación.", HttpStatus.NOT_FOUND);
+                APIResponse<Object> response = new APIResponse<>(
+                        HttpStatus.NOT_FOUND.value(),
+                        Collections.singletonList("No se encontró cajero para actualizar la ubicación."),
+                        null
+                );
+                return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
             }
+
             existingCajeroautomatico.setUbicacion(cajeroautomaticoRequest.getUbicacion());
-            service.save(existingCajeroautomatico);
-            return new ResponseEntity<>("La ubicación del cajero fue actualizada con éxito.", HttpStatus.OK);
+            Cajeroautomatico updatedCajeroautomatico = service.save(existingCajeroautomatico);
+
+            APIResponse<Object> response = new APIResponse<>(
+                    HttpStatus.OK.value(),
+                    Collections.singletonList("La ubicación del cajero fue actualizada con éxito."),
+                    updatedCajeroautomatico
+            );
+
+            return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage() + " Error al actualizar la ubicación");
+            APIResponse<Object> errorResponse = new APIResponse<>(
+                    HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                    Arrays.asList("Error al actualizar la ubicación", e.getMessage()),
+                    null
+            );
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
         }
     }
-
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id) {
         Cajeroautomatico existingCajeroautomatico = service.findById(id);
