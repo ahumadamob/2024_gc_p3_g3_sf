@@ -1,5 +1,7 @@
 package imb.progra3.gc.grupo3.controller;
 
+import imb.progra3.gc.grupo3.dto.APIResponse;
+import imb.progra3.gc.grupo3.dto.DescripcionDTO;
 import imb.progra3.gc.grupo3.entity.Ubicacion;
 import imb.progra3.gc.grupo3.service.IUbicacionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -79,7 +82,7 @@ public class UbicacionController {
     	return ResponseEntity.notFound().build();
     }
 }*/
-    @PutMapping("/ubicaciones/{id}/descripcion")
+/*    @PutMapping("/ubicaciones/{id}/descripcion")
     public ResponseEntity<String> updateDescripcion(@PathVariable("id") Long id, @RequestBody Map<String, String> payload) {
         // Verificar si la ubicación existe primero
         if (!ubicacionService.exists(id)) {
@@ -95,6 +98,30 @@ public class UbicacionController {
         
         ubicacionService.updateDescripcion(id, nuevaDescripcion);
         return ResponseEntity.ok("Descripción actualizada con éxito.");
+    }*/
+    @PutMapping("api/ubicaciones/{id}/descripcion")
+    public ResponseEntity<APIResponse<String>> updateDescripcion(@PathVariable("id") Long id, @RequestBody DescripcionDTO descripcionDTO) {
+        List<String> mensajes = new ArrayList<>();
+
+        // Verificar si la ubicación existe primero
+        if (!ubicacionService.exists(id)) {
+            mensajes.add("Ubicación no encontrada");
+            APIResponse<String> response = new APIResponse<>(HttpStatus.NOT_FOUND.value(), mensajes, null);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }
+
+        // Validar que la descripción no sea nula o vacía
+        String nuevaDescripcion = descripcionDTO.getDescripcion();
+        if (nuevaDescripcion == null || nuevaDescripcion.trim().isEmpty()) {
+            mensajes.add("Se requiere una descripción válida.");
+            APIResponse<String> response = new APIResponse<>(HttpStatus.BAD_REQUEST.value(), mensajes, null);
+            return ResponseEntity.badRequest().body(response);
+        }
+
+        ubicacionService.updateDescripcion(id, nuevaDescripcion);
+        mensajes.add("Descripción actualizada con éxito.");
+        APIResponse<String> response = new APIResponse<>(HttpStatus.OK.value(), mensajes, nuevaDescripcion);
+        return ResponseEntity.ok(response);
     }
 
 }
