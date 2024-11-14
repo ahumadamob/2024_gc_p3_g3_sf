@@ -42,13 +42,15 @@ public class UbicacionController {
             : ResponseEntity.ok(ubicaciones);
     }    
     
-    @PostMapping("/ubicaciones")
+//   @PostMapping("/api/ubicaciones")
+    @PostMapping
     public ResponseEntity<Ubicacion> save(@RequestBody Ubicacion ubicacion) {
         Ubicacion savedUbicacion = ubicacionService.save(ubicacion);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedUbicacion);
     }
 
-    @PutMapping("/ubicaciones/{id}")
+//    @PutMapping("/api/ubicaciones/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Ubicacion> update(@PathVariable Long id, @RequestBody Ubicacion ubicacion) {
         if (ubicacionService.exists(id)) {
         	ubicacion.setId(id);
@@ -99,7 +101,7 @@ public class UbicacionController {
         ubicacionService.updateDescripcion(id, nuevaDescripcion);
         return ResponseEntity.ok("Descripción actualizada con éxito.");
     }*/
-    @PutMapping("api/ubicaciones/{id}/descripcion")
+    @PutMapping("/{id}/descripcion")
     public ResponseEntity<APIResponse<String>> updateDescripcion(@PathVariable("id") Long id, @RequestBody DescripcionDTO descripcionDTO) {
         List<String> mensajes = new ArrayList<>();
 
