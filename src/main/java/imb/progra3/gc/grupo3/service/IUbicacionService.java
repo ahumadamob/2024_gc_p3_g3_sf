@@ -10,4 +10,5 @@ public interface IUbicacionService {
 	void delete(Long id);
 	boolean exists(Long id);
 	List<Ubicacion> findByCiudad(String ciudad);
+	void updateDescripcion(Long id, String nuevaDescripcion);
 }
