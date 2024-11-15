@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import imb.progra3.gc.grupo3.entity.Tarjeta;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 
@@ -75,4 +76,14 @@ public class ResponseUtil {
         return messages;
 
     }
+
+	public static ResponseEntity<APIResponse<Tarjeta>> successResponse(String string, Object object) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static ResponseEntity<APIResponse<Tarjeta>> errorResponse(String string, HttpStatus notFound) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

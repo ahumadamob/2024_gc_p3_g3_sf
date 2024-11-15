@@ -15,7 +15,7 @@ public class Cuenta {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String tipoCuenta;
-    private BigDecimal saldo;
+    private Double saldo;
     private LocalDate fechaApertura;
     private Long idCliente;
     private String numeroCuenta;
@@ -37,12 +37,12 @@ public class Cuenta {
         this.tipoCuenta = tipoCuenta;
     }
 
-    public BigDecimal getSaldo() {
+    public Double getSaldo() {
         return saldo;
     }
 
-    public void setSaldo(BigDecimal saldo) {
-        this.saldo = saldo;
+    public void setSaldo(Double nuevoSaldo) {
+        this.saldo = nuevoSaldo;
     }
 
     public LocalDate getFechaApertura() {
