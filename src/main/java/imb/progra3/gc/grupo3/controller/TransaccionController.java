@@ -1,6 +1,9 @@
 package imb.progra3.gc.grupo3.controller;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -79,6 +82,36 @@ public class TransaccionController {
         return transacciones.isEmpty() ? ResponseUtil.notFound("No se encontraron transacciones del tipo " + tipo)
                 : ResponseUtil.success(transacciones);
     }
+    
+    //nuevo endpoint estado.
+    @PutMapping("/{id}/estado")
+    public ResponseEntity<APIResponse<String>> updateEstadoTransaccion(@PathVariable Long id, @RequestBody Map<String, String> requestBody) {
+        if (!transaccionService.exists(id)) {
+            return ResponseUtil.notFound("No existe una transacción con el ID " + id);
+        }
+
+        String nuevoEstado = requestBody.get("estado");
+        
+      
+        if (nuevoEstado == null || nuevoEstado.trim().isEmpty()) {
+            return ResponseUtil.badRequest("El estado no puede ser null o vacío.");
+        }
+        
+       
+        List<String> estadosValidos = Arrays.asList("Pendiente", "Completada", "Cancelada");
+        if (!estadosValidos.contains(nuevoEstado)) {
+            return ResponseUtil.badRequest("El estado '" + nuevoEstado + "' no es válido.");
+        }
+
+        try {
+            transaccionService.updateEstadoTransaccion(id, nuevoEstado);
+            return ResponseUtil.success("Estado de la transacción actualizado exitosamente.");
+        } catch (IllegalArgumentException e) {
+            return ResponseUtil.badRequest(e.getMessage());
+        }
+    }
+
+
 
     @GetMapping("/greet")
     public ResponseEntity<APIResponse<String>> greet() {

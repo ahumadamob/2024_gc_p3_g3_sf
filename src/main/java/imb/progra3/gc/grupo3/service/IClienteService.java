@@ -9,5 +9,6 @@ public interface IClienteService {
     Cliente save(Cliente cliente);
     void delete(Long id);
     boolean exists(Long id);
+    Cliente updateDireccion(Long id, String nuevaDireccion);
     List<Cliente> findClientesByEdad(int edad);
 }

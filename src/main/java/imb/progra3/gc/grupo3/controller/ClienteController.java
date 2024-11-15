@@ -44,7 +44,7 @@ public class ClienteController {
             Cliente updatedCliente = clienteService.save(cliente);
             return ResponseUtil.success(updatedCliente);
         } else {
-            return ResponseUtil.notFound("Cliente no encontrado");
+            return ResponseUtil.notFound("Cliente no encontrado con ID" + id);
         }
     }
 
@@ -57,7 +57,19 @@ public class ClienteController {
             return ResponseUtil.notFound("Cliente no encontrado");
         }
     }
+    @PutMapping("/{id}/direccion")
+    public ResponseEntity<APIResponse<Cliente>> updateDireccion(@PathVariable Long id, @RequestBody String nuevaDireccion) {
+        if (clienteService.exists(id)) {
+            Cliente cliente = clienteService.getById(id);
+            cliente.setDireccion(nuevaDireccion); 
+            Cliente updatedCliente = clienteService.save(cliente);
+            return ResponseUtil.success(updatedCliente);
+        } else {
+            return ResponseUtil.notFound("Cliente no encontrado");
+        }
+    }
 
+    
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 

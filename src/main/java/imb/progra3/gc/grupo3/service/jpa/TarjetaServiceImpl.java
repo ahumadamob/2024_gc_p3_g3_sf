@@ -1,5 +1,7 @@
 package imb.progra3.gc.grupo3.service.jpa;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import imb.progra3.gc.grupo3.entity.Tarjeta;
@@ -41,4 +43,16 @@ public class TarjetaServiceImpl implements ITarjetaService {
 	public List<Tarjeta> findBynumeroTarjeta(String numeroTarjeta) {
 		return repo.findBynumeroTarjeta(numeroTarjeta);
 	}
-}
+	
+	@Override
+	public boolean bloquearTarjeta(Long id) {
+	    Optional<Tarjeta> tarjetaOptional = repo.findById(id);
+	       if (tarjetaOptional.isPresent()) {
+	           Tarjeta tarjeta = tarjetaOptional.get();
+	           tarjeta.setEstado("bloqueada");
+	           repo.save(tarjeta);
+	           return true;
+	        }
+	        return false;
+	    }
+	}

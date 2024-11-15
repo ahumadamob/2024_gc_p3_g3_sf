@@ -45,4 +45,15 @@ public class ClienteServiceImpl implements IClienteService {
     public List<Cliente> findClientesByEdad(int edad) {
         return clienteRepository.findByEdadGreaterThan(edad);
     }
+    @Override
+    public Cliente updateDireccion(Long id, String nuevaDireccion) {
+        Optional<Cliente> optionalCliente = clienteRepository.findById(id);
+        if (optionalCliente.isPresent()) {
+            Cliente cliente = optionalCliente.get();
+            cliente.setDireccion(nuevaDireccion);
+            return clienteRepository.save(cliente);
+        }
+        return null;
+    }
+
 }
