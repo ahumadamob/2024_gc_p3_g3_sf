@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ICuentaService {
 
-    List<Cuenta> findAll();
+
     List<Cuenta> getAll();
     Cuenta findById(Long id);
 
@@ -14,4 +14,7 @@ public interface ICuentaService {
     void delete(Long id);
     boolean exists(Long id);
 	Cuenta getById(Long id);
+
+
+    boolean actualizarSaldo(Long id, Double nuevoSaldo);
 }

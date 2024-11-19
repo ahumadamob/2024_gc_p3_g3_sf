@@ -6,9 +6,12 @@ import imb.progra3.gc.grupo3.entity.Tarjeta;
 
 public interface ITarjetaService {
 
-    List<Tarjeta> getAll();
-    Tarjeta getById(Long id);
-    Tarjeta save(Tarjeta tarjeta);
-    void delete(Long id);
-    boolean exists(Long id);
+	public List<Tarjeta> findAll();
+	public Tarjeta findById(Long id);
+	public boolean exists(Long id);
+	public Tarjeta save(Tarjeta tarjeta);
+	public void delete(Long id);
+	public List<Tarjeta> findBynumeroTarjeta(String numeroTarjeta);
+	boolean bloquearTarjeta(Long id);
+
 }

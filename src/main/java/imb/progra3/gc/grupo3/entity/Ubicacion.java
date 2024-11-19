@@ -13,6 +13,7 @@ public class Ubicacion extends BaseEntity {
 	private String pais;
 	private String ciudad;
 	private String direccion;
+	private String descripcion; 
 	
 	public Ubicacion() {}
 	
@@ -35,4 +36,20 @@ public class Ubicacion extends BaseEntity {
 		this.direccion = direccion;
 	}
 
+/*	public Object getNombre() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void setNombre(Object nombre) {
+		// TODO Auto-generated method stub
+		
+	}*/
+	public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
 }

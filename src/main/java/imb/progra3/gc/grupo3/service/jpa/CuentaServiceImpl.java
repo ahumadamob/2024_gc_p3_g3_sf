@@ -14,21 +14,17 @@ public class CuentaServiceImpl implements ICuentaService {
     @Autowired
     private CuentaRepository cuentaRepository;
 
-    @Override
-    public List<Cuenta> getAll() {
-        return cuentaRepository.findAll();
-    }
+
 
     @Override
-    public List<Cuenta> findAll() {
-        return cuentaRepository.findAll();
+    public List<Cuenta> getAll() {
+        return null;
     }
 
     @Override
     public Cuenta findById(Long id) {
         return cuentaRepository.findById(id).orElse(null);
     }
-
 
     @Override
     public Cuenta save(Cuenta cuenta) {
@@ -45,9 +41,30 @@ public class CuentaServiceImpl implements ICuentaService {
         return cuentaRepository.existsById(id);
     }
 
+
+    public boolean cuentaExistePorId(Long id) {
+        return cuentaRepository.existsById(id);
+    }
+
+
+    public boolean cuentaExistePorNumeroCuenta(String numeroCuenta) {
+        return cuentaRepository.existsByNumeroCuenta(numeroCuenta);
+    }
 	@Override
 	public Cuenta getById(Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+    @Override
+    public boolean actualizarSaldo(Long id, Double nuevoSaldo) {
+        if (nuevoSaldo == null || nuevoSaldo < 0) {
+            return false;
+        }
+        return cuentaRepository.findById(id).map(cuenta -> {
+            cuenta.setSaldo(nuevoSaldo);
+            cuentaRepository.save(cuenta);
+            return true;
+        }).orElse(false);
+    }
 }

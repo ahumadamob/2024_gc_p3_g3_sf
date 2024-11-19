@@ -15,9 +15,10 @@ public class Cuenta extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
   
     private String tipoCuenta;
-    private BigDecimal saldo;
+    private Double saldo;
     private LocalDate fechaApertura;
     private Long idCliente;
+    private String numeroCuenta;
 
     // Getters y setters
 
@@ -30,12 +31,12 @@ public class Cuenta extends BaseEntity {
         this.tipoCuenta = tipoCuenta;
     }
 
-    public BigDecimal getSaldo() {
+    public Double getSaldo() {
         return saldo;
     }
 
-    public void setSaldo(BigDecimal saldo) {
-        this.saldo = saldo;
+    public void setSaldo(Double nuevoSaldo) {
+        this.saldo = nuevoSaldo;
     }
 
     public LocalDate getFechaApertura() {
@@ -52,6 +53,13 @@ public class Cuenta extends BaseEntity {
 
     public void setIdCliente(Long idCliente) {
         this.idCliente = idCliente;
+    }
+    public String getNumeroCuenta() {
+        return numeroCuenta;
+    }
+
+    public void setNumeroCuenta(String numeroCuenta) {
+        this.numeroCuenta = numeroCuenta;
     }
 }
 
