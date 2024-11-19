@@ -7,18 +7,15 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.NotNull;
 
 @Entity
-public class Transaccion {
+public class Transaccion extends BaseEntity {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@NotNull(message = "El monto no puede ser nulo")
     @DecimalMin(value = "0.0", inclusive = false, message = "El monto debe ser un número positivo")
 
-    private Long id;
     private String tipoTransaccion;
     private BigDecimal monto;
     private LocalDateTime fechaHora;

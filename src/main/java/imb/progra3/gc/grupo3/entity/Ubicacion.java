@@ -6,24 +6,16 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class Ubicacion {
+public class Ubicacion extends BaseEntity {
     @Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	
 	private String pais;
 	private String ciudad;
 	private String direccion;
 	private String descripcion; 
 	
 	public Ubicacion() {}
-
-	public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 	
 	public String getPais() {
 		return pais;

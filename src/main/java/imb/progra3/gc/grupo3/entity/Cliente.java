@@ -8,17 +8,14 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
-public class Cliente {
+public class Cliente extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    
-    @NotNull(message = "El nombre no puede ser nulo")
+   
     private String nombre;
     
     @NotNull(message = "El apellido no puede ser nulo")
     private String apellido;
-    
     private String direccion;
     private String telefono;
     private String correoElectronico;

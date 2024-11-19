@@ -9,11 +9,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class Cuenta {
+public class Cuenta extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  
     private String tipoCuenta;
     private Double saldo;
     private LocalDate fechaApertura;
@@ -21,13 +21,7 @@ public class Cuenta {
     private String numeroCuenta;
 
     // Getters y setters
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getTipoCuenta() {
         return tipoCuenta;
