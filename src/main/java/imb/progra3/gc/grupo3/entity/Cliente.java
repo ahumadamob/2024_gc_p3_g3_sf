@@ -1,17 +1,12 @@
 package imb.progra3.gc.grupo3.entity;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Cliente extends BaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-   
+  
     private String nombre;
     
     @NotNull(message = "El apellido no puede ser nulo")
@@ -23,16 +18,6 @@ public class Cliente extends BaseEntity {
     @NotNull(message = "La edad no puede ser nula")
     @Min(value = 0, message = "La edad debe ser un número positivo")
     private Integer edad;
-
-    // Getters and setters
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public String getNombre() {
         return nombre;
