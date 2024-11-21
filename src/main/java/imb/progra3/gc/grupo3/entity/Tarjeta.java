@@ -3,16 +3,9 @@ package imb.progra3.gc.grupo3.entity;
 import java.util.Date;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 
 @Entity
 	public class Tarjeta extends BaseEntity {
-		
-		@Id
-		@GeneratedValue(strategy=GenerationType.IDENTITY)
-		private Long Id;
 		
 		private String numeroTarjeta;
 		
@@ -21,14 +14,6 @@ import jakarta.persistence.Id;
 		private String estado;
 		
 		private Long IdCuenta;
-
-		public Long getId() {
-			return Id;
-		}
-
-		public void setId(Long id) {
-			Id = id;
-		}
 
 		public String getNumeroTarjeta() {
 			return numeroTarjeta;
