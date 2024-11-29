@@ -12,51 +12,63 @@ import jakarta.persistence.EntityNotFoundException;
 
 
 @Service
-public class UbicacionServiceImpl implements IUbicacionService{
+public class UbicacionServiceImpl implements IUbicacionService {
 	@Autowired
 	private UbicacionRepository ubicacionRepository;
-	
-	 @Override
-	    public List<Ubicacion> getAll() {
-	        return ubicacionRepository.findAll();
-	    }
 
-	    @Override
-	    public Ubicacion getById(Long id) {
-	    	Optional<Ubicacion> optionalUbicacion = ubicacionRepository.findById(id);
-	        return optionalUbicacion.orElse(null);
-	    }
+	@Override
+	public List<Ubicacion> getAll() {
+		return ubicacionRepository.findAll();
+	}
 
-	    @Override
-	    public Ubicacion save(Ubicacion ubicacion) {
-	        return ubicacionRepository.save(ubicacion);
-	    }
+	@Override
+	public Ubicacion getById(Long id) {
+		Optional<Ubicacion> optionalUbicacion = ubicacionRepository.findById(id);
+		return optionalUbicacion.orElse(null);
+	}
 
-	    @Override
-	    public void delete(Long id) {
-	        ubicacionRepository.deleteById(id);
-	    }
+	@Override
+	public Ubicacion save(Ubicacion ubicacion) {
+		return ubicacionRepository.save(ubicacion);
+	}
 
-	    @Override
-	    public boolean exists(Long id) {
-	        return ubicacionRepository.existsById(id);
-	    }
-	 // Implementación del método mágico
-	    @Override
-	    public List<Ubicacion> findByCiudad(String ciudad) {
-	        return ubicacionRepository.findByCiudad(ciudad);
-	    }
-	    @Override
-	    public void updateDescripcion(Long id, String nuevaDescripcion) {
-	        Optional<Ubicacion> ubicacionOptional = ubicacionRepository.findById(id);
-	        
-	        if (ubicacionOptional.isPresent()) {
-	            Ubicacion ubicacion = ubicacionOptional.get();
-	            ubicacion.setDescripcion(nuevaDescripcion);  // Actualiza solo la descripción
-	            ubicacionRepository.save(ubicacion);  // Guarda los cambios
-	        } else {
-	            throw new EntityNotFoundException("Ubicación no encontrada para el ID: " + id);
-	        }
-	    }
+	@Override
+	public void delete(Long id) {
+		ubicacionRepository.deleteById(id);
+	}
 
+	@Override
+	public boolean exists(Long id) {
+		return ubicacionRepository.existsById(id);
+	}
+
+	// Implementación del método mágico
+	@Override
+	public List<Ubicacion> findByCiudad(String ciudad) {
+		return ubicacionRepository.findByCiudad(ciudad);
+	}
+
+	@Override
+	public void updateDescripcion(Long id, String nuevaDescripcion) {
+		Optional<Ubicacion> ubicacionOptional = ubicacionRepository.findById(id);
+
+		if (ubicacionOptional.isPresent()) {
+			Ubicacion ubicacion = ubicacionOptional.get();
+			ubicacion.setDescripcion(nuevaDescripcion);  // Actualiza solo la descripción
+			ubicacionRepository.save(ubicacion);  // Guarda los cambios
+		} else {
+			throw new EntityNotFoundException("Ubicación no encontrada para el ID: " + id);
+		}
+	}
+
+	@Override
+	public boolean existsByDireccionAndCiudad(String direccion, String ciudad) {
+		return ubicacionRepository.existsByDireccionAndCiudad(direccion, ciudad);
+	}
+	public Ubicacion saveUbicacion(Ubicacion ubicacion) {
+		if (ubicacionRepository.existsByDireccionAndCiudad(ubicacion.getDireccion(), ubicacion.getCiudad())) {
+			throw new IllegalArgumentException("Ya existe una ubicación registrada con la misma dirección y ciudad.");
+		}
+		return ubicacionRepository.save(ubicacion);
+	}
 }
