@@ -2,8 +2,11 @@ package imb.progra3.gc.grupo3.controller;
 
 import imb.progra3.gc.grupo3.dto.APIResponse;
 import imb.progra3.gc.grupo3.dto.DescripcionDTO;
+import imb.progra3.gc.grupo3.dto.UbicacionDTO;
 import imb.progra3.gc.grupo3.entity.Ubicacion;
 import imb.progra3.gc.grupo3.service.IUbicacionService;
+import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,9 +51,38 @@ public class UbicacionController {
         Ubicacion savedUbicacion = ubicacionService.save(ubicacion);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedUbicacion);
     }
+    
+    @PostMapping
+    public ResponseEntity<Ubicacion> save(@Valid @RequestBody UbicacionDTO ubicacionDTO) {
+        // Validamos las coordenadas geográficas
+        if (ubicacionDTO.getLatitud() < -90 || ubicacionDTO.getLatitud() > 90) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body("La latitud debe estar entre -90 y 90 grados.");
+        }
+        if (ubicacionDTO.getLongitud() < -180 || ubicacionDTO.getLongitud() > 180) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body("La longitud debe estar entre -180 y 180 grados.");
+        }
+
+        // Crear la entidad Ubicacion a partir del DTO recibido
+        Ubicacion ubicacion = new Ubicacion();
+        ubicacion.setPais(ubicacionDTO.getPais());
+        ubicacion.setCiudad(ubicacionDTO.getCiudad());
+        ubicacion.setDireccion(ubicacionDTO.getDireccion());
+        ubicacion.setDescripcion(ubicacionDTO.getDescripcion());
+        ubicacion.setCodigoPostal(ubicacionDTO.getCodigoPostal());
+        ubicacion.setLatitud(ubicacionDTO.getLatitud());  // Asignamos latitud validada
+        ubicacion.setLongitud(ubicacionDTO.getLongitud());  // Asignamos longitud validada
+
+        // Guardamos la ubicación
+        Ubicacion savedUbicacion = ubicacionService.save(ubicacion);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedUbicacion);
+    }
+
+    
 
 //    @PutMapping("/api/ubicaciones/{id}")
-    @PutMapping("/{id}")
+/*    @PutMapping("/{id}")
     public ResponseEntity<Ubicacion> update(@PathVariable Long id, @RequestBody Ubicacion ubicacion) {
         if (ubicacionService.exists(id)) {
         	ubicacion.setId(id);
@@ -59,48 +91,39 @@ public class UbicacionController {
         }else { 
         	return ResponseEntity.notFound().build();
         }
-    }
-   /* @PutMapping("/ubicaciones/{id}/descripcion")
-    public ResponseEntity<String> updateDescripcion(@PathVariable("id") Long id, @RequestBody Map<String, String> payload) {
-        String nuevaDescripcion = payload.get("descripcion");
-        if (nuevaDescripcion == null || nuevaDescripcion.trim().isEmpty()) {
-            return ResponseEntity.badRequest().body("Se requiere una descripción válida.");
+    }*/
+    @PutMapping("/{id}")
+    public ResponseEntity<String> update(@PathVariable Long id, @RequestBody UbicacionDTO ubicacionDTO) {
+        if (ubicacionService.exists(id)) {
+            // Validamos las coordenadas geográficas
+            if (ubicacionDTO.getLatitud() < -90 || ubicacionDTO.getLatitud() > 90) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("La latitud debe estar entre -90 y 90 grados.");
+            }
+            if (ubicacionDTO.getLongitud() < -180 || ubicacionDTO.getLongitud() > 180) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("La longitud debe estar entre -180 y 180 grados.");
+            }
+            
+            // Actualizamos la entidad con los datos del DTO
+            Ubicacion ubicacion = new Ubicacion();
+            ubicacion.setId(id);
+            ubicacion.setPais(ubicacionDTO.getPais());
+            ubicacion.setCiudad(ubicacionDTO.getCiudad());
+            ubicacion.setDireccion(ubicacionDTO.getDireccion());
+            ubicacion.setDescripcion(ubicacionDTO.getDescripcion());
+            ubicacion.setCodigoPostal(ubicacionDTO.getCodigoPostal());
+            ubicacion.setLatitud(ubicacionDTO.getLatitud());  // Aseguramos que la latitud esté validada
+            ubicacion.setLongitud(ubicacionDTO.getLongitud());  // Aseguramos que la longitud esté validada
+
+            Ubicacion updatedUbicacion = ubicacionService.save(ubicacion);
+            return ResponseEntity.ok(updatedUbicacion);
+        } else {
+            return ResponseEntity.notFound().build();
         }
-        
-        if (!ubicacionService.exists(id)) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Ubicación no encontrada.");
-        }
-        
-        ubicacionService.updateDescripcion(id, nuevaDescripcion);
-        return ResponseEntity.ok("Descripción actualizada con éxito.");
     }
 
-    @DeleteMapping("/ubicacion/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        if (ubicacionService.exists(id)) {
-           ubicacionService.delete(id);
-           return ResponseEntity.noContent().build();
-    } else {
-    	return ResponseEntity.notFound().build();
-    }
-}*/
-/*    @PutMapping("/ubicaciones/{id}/descripcion")
-    public ResponseEntity<String> updateDescripcion(@PathVariable("id") Long id, @RequestBody Map<String, String> payload) {
-        // Verificar si la ubicación existe primero
-        if (!ubicacionService.exists(id)) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Ubicación no encontrada.");
-        }
-        
-        String nuevaDescripcion = payload.get("descripcion");
-        
-        // Validar que la descripción no sea nula o vacía
-        if (nuevaDescripcion == null || nuevaDescripcion.trim().isEmpty()) {
-            return ResponseEntity.badRequest().body("Se requiere una descripción válida.");
-        }
-        
-        ubicacionService.updateDescripcion(id, nuevaDescripcion);
-        return ResponseEntity.ok("Descripción actualizada con éxito.");
-    }*/
+
     @PutMapping("/{id}/descripcion")
     public ResponseEntity<APIResponse<String>> updateDescripcion(@PathVariable("id") Long id, @RequestBody DescripcionDTO descripcionDTO) {
         List<String> mensajes = new ArrayList<>();
