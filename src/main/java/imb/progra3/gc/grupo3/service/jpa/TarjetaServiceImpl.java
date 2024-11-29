@@ -1,10 +1,16 @@
 package imb.progra3.gc.grupo3.service.jpa;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+
+import imb.progra3.gc.grupo3.entity.Cuenta;
 import imb.progra3.gc.grupo3.entity.Tarjeta;
+import imb.progra3.gc.grupo3.entity.TarjetaDTO;
 import imb.progra3.gc.grupo3.repository.TarjetaRepository;
 import imb.progra3.gc.grupo3.service.ITarjetaService;
 
@@ -54,5 +60,25 @@ public class TarjetaServiceImpl implements ITarjetaService {
 	           return true;
 	        }
 	        return false;
+	    }
+	
+	 public Tarjeta crearTarjeta(TarjetaDTO tarjeta) {
+		 
+	        if (tarjeta.getFechaVencimiento().isBefore(LocalDate.now())) {
+	            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "La fecha de vencimiento no puede ser anterior a la fecha actual.");
+	        }
+
+	        long tarjetasActivas = repo.countByEstadoAndCuentaId("activa", tarjeta.getIdCuenta());
+	        if (tarjetasActivas >= 3) {
+	            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No se pueden crear más de 3 tarjetas activas para esta cuenta.");
+	        }
+
+	        Tarjeta nuevaTarjeta = new Tarjeta();
+	        nuevaTarjeta.setNumeroTarjeta(tarjeta.getNumero());
+	        nuevaTarjeta.setFechaVencimiento(tarjeta.getFechaVencimiento());
+	        nuevaTarjeta.setEstado("activa");
+	        nuevaTarjeta.setIdCuenta(new Cuenta()); // Asume que ya tienes una entidad Cuenta.
+
+	        return repo.save(nuevaTarjeta);
 	    }
 	}

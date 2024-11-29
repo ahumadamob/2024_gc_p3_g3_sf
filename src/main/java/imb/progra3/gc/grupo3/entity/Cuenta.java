@@ -2,6 +2,7 @@ package imb.progra3.gc.grupo3.entity;
 
 import java.time.LocalDate;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 
 @Entity
@@ -13,6 +14,9 @@ public class Cuenta extends BaseEntity {
     private LocalDate fechaApertura;
     private Long idCliente;
     private String numeroCuenta;
+   
+    @Column(nullable = false)
+    private String titular;
 
     // Getters y setters
 
@@ -55,5 +59,15 @@ public class Cuenta extends BaseEntity {
     public void setNumeroCuenta(String numeroCuenta) {
         this.numeroCuenta = numeroCuenta;
     }
+
+	public String getTitular() {
+		return titular;
+	}
+
+	public void setTitular(String titular) {
+		this.titular = titular;
+	}
+    
+    
 }
 
