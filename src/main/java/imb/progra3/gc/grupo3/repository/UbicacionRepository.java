@@ -10,5 +10,6 @@ import org.springframework.stereotype.Repository;
 public interface UbicacionRepository extends JpaRepository<Ubicacion, Long>{
 
 	List<Ubicacion> findByCiudad(String ciudad);
-
+	boolean existsByDireccionAndCiudad(String direccion, String ciudad);
+	
 }
