@@ -1,8 +1,9 @@
 package imb.progra3.gc.grupo3.service;
 
 import java.util.List;
+
+import imb.progra3.gc.grupo3.dto.TarjetaDTO;
 import imb.progra3.gc.grupo3.entity.Tarjeta;
-import imb.progra3.gc.grupo3.entity.TarjetaDTO;
 import jakarta.validation.Valid;
 
 

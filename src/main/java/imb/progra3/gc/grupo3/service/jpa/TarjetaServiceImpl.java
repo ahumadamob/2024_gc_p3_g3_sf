@@ -8,9 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import imb.progra3.gc.grupo3.dto.TarjetaDTO;
 import imb.progra3.gc.grupo3.entity.Cuenta;
 import imb.progra3.gc.grupo3.entity.Tarjeta;
-import imb.progra3.gc.grupo3.entity.TarjetaDTO;
 import imb.progra3.gc.grupo3.repository.TarjetaRepository;
 import imb.progra3.gc.grupo3.service.ITarjetaService;
 
@@ -62,7 +62,8 @@ public class TarjetaServiceImpl implements ITarjetaService {
 	        return false;
 	    }
 	
-	 public Tarjeta crearTarjeta(TarjetaDTO tarjeta) {
+	@Override 
+	public Tarjeta crearTarjeta(TarjetaDTO tarjeta) {
 		 
 	        if (tarjeta.getFechaVencimiento().isBefore(LocalDate.now())) {
 	            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "La fecha de vencimiento no puede ser anterior a la fecha actual.");
@@ -81,4 +82,5 @@ public class TarjetaServiceImpl implements ITarjetaService {
 
 	        return repo.save(nuevaTarjeta);
 	    }
+
 	}
