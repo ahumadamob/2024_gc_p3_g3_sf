@@ -1,14 +1,13 @@
 package imb.progra3.gc.grupo3.service.jpa;
 import java.util.List;
 
-import imb.progra3.gc.grupo3.entity.Cajeroautomatico;
-import imb.progra3.gc.grupo3.exception.ResourseNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import imb.progra3.gc.grupo3.entity.Cajeroautomatico;
 import imb.progra3.gc.grupo3.repository.CajeroAutomaticoRepository;
 import imb.progra3.gc.grupo3.service.ICajeroAutomaticoService;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CajeroautomaticoServiceImpl implements ICajeroAutomaticoService {

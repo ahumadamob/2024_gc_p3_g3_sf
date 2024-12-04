@@ -6,8 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import imb.progra3.gc.grupo3.dto.TarjetaDTO;
 import imb.progra3.gc.grupo3.entity.Tarjeta;
-import imb.progra3.gc.grupo3.entity.TarjetaDTO;
 import imb.progra3.gc.grupo3.service.ITarjetaService;
 import imb.progra3.gc.grupo3.util.APIResponse;
 import imb.progra3.gc.grupo3.util.ResponseUtil;
