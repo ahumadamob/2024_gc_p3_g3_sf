@@ -1,25 +1,32 @@
 package imb.progra3.gc.grupo3.entity;
 
+import jakarta.persistence.*;
 import java.time.LocalDate;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
 
 @Entity
 public class Cuenta extends BaseEntity {
 
-
+    @Column(nullable = false)
     private String tipoCuenta;
+
+    @Column(nullable = false)
     private Double saldo;
+
+    @Column(nullable = false)
     private LocalDate fechaApertura;
-    private Long idCliente;
+
+    @Column(nullable = false, unique = true)
     private String numeroCuenta;
-   
+
     @Column(nullable = false)
     private String titular;
 
-    // Getters y setters
+    // Relación con Cliente (ManyToOne)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_cliente", nullable = false)
+    private Cliente cliente;
 
+    // Getters y setters
 
     public String getTipoCuenta() {
         return tipoCuenta;
@@ -33,8 +40,8 @@ public class Cuenta extends BaseEntity {
         return saldo;
     }
 
-    public void setSaldo(Double nuevoSaldo) {
-        this.saldo = nuevoSaldo;
+    public void setSaldo(Double saldo) {
+        this.saldo = saldo;
     }
 
     public LocalDate getFechaApertura() {
@@ -45,13 +52,6 @@ public class Cuenta extends BaseEntity {
         this.fechaApertura = fechaApertura;
     }
 
-    public Long getIdCliente() {
-        return idCliente;
-    }
-
-    public void setIdCliente(Long idCliente) {
-        this.idCliente = idCliente;
-    }
     public String getNumeroCuenta() {
         return numeroCuenta;
     }
@@ -60,14 +60,38 @@ public class Cuenta extends BaseEntity {
         this.numeroCuenta = numeroCuenta;
     }
 
-	public String getTitular() {
-		return titular;
-	}
+    public String getTitular() {
+        return titular;
+    }
 
-	public void setTitular(String titular) {
-		this.titular = titular;
-	}
-    
-    
+    public void setTitular(String titular) {
+        this.titular = titular;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public Long getIdCliente() {
+        return cliente != null ? cliente.getId() : null;
+    }
+
+    // ToString, Equals, HashCode (opcional, pero útil en algunas situaciones)
+    @Override
+    public String toString() {
+        return "Cuenta{" +
+                "tipoCuenta='" + tipoCuenta + '\'' +
+                ", saldo=" + saldo +
+                ", fechaApertura=" + fechaApertura +
+                ", numeroCuenta='" + numeroCuenta + '\'' +
+                ", titular='" + titular + '\'' +
+                ", cliente=" + cliente +
+                '}';
+    }
 }
+
 
